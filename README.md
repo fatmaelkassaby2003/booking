@@ -21,46 +21,108 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Booking System API (Laravel Challenge)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+A RESTful API for managing appointment bookings between Clients and Specialists, built with Laravel.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Requirements
+ PHP ^8.1
+ Composer
+ Laravel ^10
+ MySQL
+Laravel Sanctum (for Authentication)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Setup Instructions
+  # Clone the project:
+   git clone (https://github.com/username/booking-system.git](https://github.com/fatmaelkassaby2003/booking.git)
+   cd booking-system
 
-## Laravel Sponsors
+  # Install dependencies:
+    composer install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+ # Run migrations with seeders:
+    php artisan migrate --seed
+    
+## Start the development server:
+  php artisan serve
 
-### Premium Partners
+## Authentication
+ The system uses Laravel Sanctum.
+  User types:
+         Client → makes bookings.
+         Specialist → provides services and receives bookings.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+  # Register
+   POST /api/sign
+   
+  {"name": "Ali",
+  "email": "ali@example.com",
+  "password": "123456",
+  "role": "client"}
 
-## Contributing
+ # Login
+  POST /api/login
+  
+  {"email": "ali@example.com",
+  "password": "123456"}
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+##  Bookings API
+ # Create a New Booking
+POST /api/bookings
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  {"service_id": 1,
+  "specialist_id": 2,
+  "time": "2025-09-20 15:00:00"}
+
+# Update a Booking
+  PUT /api/bookings/{id}
+  
+  {"time": "2025-09-21 18:00:00"}
+
+# Cancel a Booking
+  DELETE /api/bookings/{id}
+
+# View Client Bookings
+  GET /api/my-bookings
+
+# View Specialist Bookings
+  GET /api/specialist/bookings
+
+## Services API
+  # Add a Service
+   POST /api/services
+   
+  {"name": "Consultation",
+  "price": 200}
+
+ # Update a Service
+  PUT /api/services/{id}
+
+# Delete a Service
+DELETE /api/services/{id}
+
+# Get All Services
+GET /api/services
+
+## Business Rules
+A Specialist cannot be booked for two appointments at the same time (Conflict Check).
+Booking time must be in the future.
+A Service must be linked to a valid Specialist.
+
+## Seed Data
+Users (Clients + Specialists).
+Services linked to Specialists.
+Can be used to test the API directly after running:
+php artisan migrate --seed
+
+## Project Goals
+Test the ability to analyze requirements and convert them into a proper database schema with relationships.
+Apply Laravel Best Practices.
+Ensure correct implementation of Business Logic, Validation, and Authentication.
 
 ## Security Vulnerabilities
-
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
-
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
